@@ -4,6 +4,7 @@ import numpy as np
 from pathlib import Path
 
 
+
 #Constants
 DATASET = BNCI2014001() #from https://www.bbci.de/competition/iv/desc_2a.pdf
 LABELS = DATASET.event_id
@@ -24,12 +25,12 @@ def assign_labels(data):
 
 
 if __name__ == "__main__":
-    Path("./data/raw").mkdir(parents=True, exist_ok=True) #create data folder if it doesn't exist
+    Path("./data/raw").mkdir(parents=True, exist_ok=True) #create data and raw folders if they don't exist
     for subject in SUBJECTS:
         data = {}
         data['data'], data['label'], _ = PARADIGM.get_data(dataset=DATASET, subjects=[subject])
         data = assign_labels(data)
 
-        np.savez('./data/raw/'+'raw_patient'+str(subject), **data) 
+        np.savez('./data/raw/'+'patient'+str(subject), **data) 
 
-        print('subject '+str(subject)+' done')
+        print('Raw data subject '+str(subject)+' done')
