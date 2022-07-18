@@ -10,14 +10,22 @@ def plotTrial(raw_data, aligned_data):
     Plot of raw and aligned data for one trial to observe the effect of the alignment
     '''
     _, channels, _ = np.shape(raw_data)
-    _, axs = plt.subplots(channels, 1)
-    print((raw_data[0][:][:]))
+    _, axs = plt.subplots(round(channels/2), 2, figsize=(10,10))
+
+    col = 0 
+    row = 0   
     
     for channel in range(channels):
-        axs[channel].plot(raw_data[0,channel,:])
-        axs[channel].plot(aligned_data[0,channel,:])
+        if channel == (channels)/2:
+            col = 1
+            row = 0
 
-    axs[channels-1].set_xlabel('Time (ms)')
+        axs[row, col].plot(raw_data[0,channel,:])
+        axs[row, col].plot(aligned_data[0,channel,:])
+        row += 1
+
+    axs[round((channels-1)/2), 0].set_xlabel('Time (ms)')
+    axs[round((channels-1)/4), 0].set_ylabel('Magnitude')
     plt.show()
 
 
