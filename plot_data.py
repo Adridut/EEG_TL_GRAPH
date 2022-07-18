@@ -1,5 +1,4 @@
 import matplotlib.pyplot as plt
-import os, os.path
 from pathlib import Path
 import numpy as np
 
@@ -14,7 +13,7 @@ def plotTrial(raw_data, aligned_data):
 
     col = 0 
     row = 0   
-    
+
     for channel in range(channels):
         if channel == (channels)/2:
             col = 1
@@ -26,12 +25,14 @@ def plotTrial(raw_data, aligned_data):
 
     axs[round((channels-1)/2), 0].set_xlabel('Time (ms)')
     axs[round((channels-1)/4), 0].set_ylabel('Magnitude')
+    plt.savefig('./figs/raw_vs_aligned_comparison.png')
     plt.show()
 
 
 
 
 if __name__ == "__main__":
+    Path("./figs").mkdir(parents=True, exist_ok=True) #create figs folder if they don't exist
     subject = 1
     raw_data = dict(np.load('./data/raw/patient'+str(subject)+'.npz'))
     aligned_data = dict(np.load('./data/aligned/patient'+str(subject)+'.npz'))  
