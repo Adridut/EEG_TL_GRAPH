@@ -2,6 +2,7 @@ import numpy as np
 from scipy.linalg import sqrtm, inv
 import os, os.path
 from pathlib import Path
+import matplotlib.pyplot as plt
 
 def euclidean_alignment(X):
     '''
@@ -23,11 +24,12 @@ def euclidean_alignment(X):
 
     return X_align
 
+
 if __name__ == "__main__":
     subjectNumber = len([name for name in os.listdir("./data/raw") if os.path.isfile(os.path.join("./data/raw", name))])
     Path("./data/aligned").mkdir(parents=True, exist_ok=True) 
     for subject in range(1, subjectNumber+1):
-        data = dict(np.load('./data/raw/patient'+str(subject)+'.npz'))   
+        data = dict(np.load('./data/raw/patient'+str(subject)+'.npz')) 
         data['data'] = euclidean_alignment(data['data'])
         np.savez('./data/aligned/patient'+str(subject), **data)
         print('Euclidean alignment subject '+str(subject)+' done')
