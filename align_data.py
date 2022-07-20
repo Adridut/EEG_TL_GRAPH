@@ -2,7 +2,6 @@ import numpy as np
 from scipy.linalg import sqrtm, inv
 import os, os.path
 from pathlib import Path
-import matplotlib.pyplot as plt
 
 def euclidean_alignment(X):
     '''
