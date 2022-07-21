@@ -86,6 +86,7 @@ def plotTsneTrials(target):
     axs[0].legend()
     axs[1].legend()
 
+    plt.axis([-50, 50, -50, 50])
     plt.savefig('./figs/target' + str(target) + 'tsne.png')
     plt.show()
 
