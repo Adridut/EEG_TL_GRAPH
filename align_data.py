@@ -21,8 +21,9 @@ def euclidean_alignment(X):
     for j in range(n_trials):
         X_align[j] = sqrtm(inv(R_mean))@X[j]
 
-    return X_align
+    print('Euclidean alignment subject '+str(subject)+' done')
 
+    return X_align
 
 if __name__ == "__main__":
     subjectNumber = len([name for name in os.listdir("./data/raw") if os.path.isfile(os.path.join("./data/raw", name))])
@@ -31,4 +32,3 @@ if __name__ == "__main__":
         data = dict(np.load('./data/raw/patient'+str(subject)+'.npz')) 
         data['data'] = euclidean_alignment(data['data'])
         np.savez('./data/aligned/patient'+str(subject), **data)
-        print('Euclidean alignment subject '+str(subject)+' done')

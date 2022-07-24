@@ -86,7 +86,7 @@ def plotTsneTrials(target):
     axs[0].legend()
     axs[1].legend()
 
-    plt.axis([-50, 50, -50, 50])
+    #plt.axis([-50, 50, -50, 50])
     plt.savefig('./figs/target' + str(target) + 'tsne.png')
     plt.show()
 
@@ -94,4 +94,4 @@ def plotTsneTrials(target):
 if __name__ == "__main__":
     Path("./figs").mkdir(parents=True, exist_ok=True) #create figs folder if they don't exist
     #plotTrial(1, 0)
-    plotTsneTrials(2)
+    plotTsneTrials(1)

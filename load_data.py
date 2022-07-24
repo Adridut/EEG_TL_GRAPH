@@ -28,7 +28,8 @@ if __name__ == "__main__":
     Path("./data/raw").mkdir(parents=True, exist_ok=True) #create data and raw folders if they don't exist
     for subject in SUBJECTS:
         data = {}
-        data['data'], data['label'], _ = PARADIGM.get_data(dataset=DATASET, subjects=[subject])
+        data['data'], data['label'], eog = PARADIGM.get_data(dataset=DATASET, subjects=[subject])
+
         data = assign_labels(data)
 
         np.savez('./data/raw/'+'patient'+str(subject), **data) 
