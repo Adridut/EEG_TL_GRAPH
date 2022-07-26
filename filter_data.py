@@ -30,6 +30,6 @@ if __name__ == "__main__":
     for subject in range(1, subjectNumber+1):
         data = dict(np.load('./data/aligned/patient'+str(subject)+'.npz')) 
         print('Filtering subject {}'.format(subject))
-        butter_bandpass_filter(data['data'], lowcut=4, highcut=40, step=4, fs=250, order=5)
+        data['data'] = butter_bandpass_filter(data['data'], lowcut=4, highcut=40, step=4, fs=250, order=5)
         print('###############################################################################')
         np.savez('./data/filtered/patient'+str(subject), **data)

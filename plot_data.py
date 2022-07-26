@@ -93,5 +93,5 @@ def plotTsneTrials(target):
 
 if __name__ == "__main__":
     Path("./figs").mkdir(parents=True, exist_ok=True) #create figs folder if they don't exist
-    #plotTrial(1, 0)
-    plotTsneTrials(1)
+    plotTrial(1, 0)
+    #plotTsneTrials(1)
