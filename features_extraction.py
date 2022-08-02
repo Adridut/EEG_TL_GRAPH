@@ -35,12 +35,25 @@ def csp(class_x, class_rest):
     B, _, _ = np.linalg.svd( P.T.dot(cov_x).dot(P) )
     W = P.dot(B)
     return W
+
+def apply_mix(W, data):
+    ''' Apply a mixing matrix to each trial (basically multiply W with the EEG signal matrix)'''
+    ntrials, nchannels, nsamples = np.shape(data)
+    trials_csp = np.zeros((ntrials, nchannels, nsamples))
+    for i in range(ntrials):
+        trials_csp[i,:,:] = W.T.dot(data[i,:,:])
+    return trials_csp
         
 if __name__ == "__main__":
     subjectNumber = len([name for name in os.listdir("./data/filtered") if os.path.isfile(os.path.join("./data/aligned", name))])
     for subject in range(1, subjectNumber+1):
         data = dict(np.load('./data/filtered/patient'+str(subject)+'.npz')) 
         data = sort_by_classes(data)
+        print("##############################################################################")
+        print("CSP for patient", subject)
         for c in set(data['label']):
-            csp([data['data'][i] for i in range(len(data['label'])) if data['label'][i] == c],
-             [data['data'][i] for i in range(len(data['label'])) if data['label'][i] != c])
+            print("class", c)
+            class_x = [data['data'][i] for i in range(len(data['label'])) if data['label'][i] == c]
+            class_rest = [data['data'][i] for i in range(len(data['label'])) if data['label'][i] != c]
+            W = csp(class_x, class_rest)
+            apply_mix(W, np.array(class_rest))
