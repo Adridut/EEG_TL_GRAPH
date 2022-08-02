@@ -1,10 +1,6 @@
 import numpy as np
 import os, os.path
 
-def sort_by_classes(data):
-    data['label'] = sorted(data['label'] , key=lambda x: x[0])
-    return data
-
 def cov(data):
     ''' Calculate the covariance for each trial and return their average '''
     n_trials, channels, _ = np.shape(data)
@@ -47,10 +43,9 @@ def apply_mix(W, data):
 if __name__ == "__main__":
     subjectNumber = len([name for name in os.listdir("./data/filtered") if os.path.isfile(os.path.join("./data/aligned", name))])
     for subject in range(1, subjectNumber+1):
-        data = dict(np.load('./data/filtered/patient'+str(subject)+'.npz')) 
-        data = sort_by_classes(data)
         print("##############################################################################")
         print("CSP for patient", subject)
+        data = dict(np.load('./data/filtered/patient'+str(subject)+'.npz')) 
         for c in set(data['label']):
             print("class", c)
             class_x = [data['data'][i] for i in range(len(data['label'])) if data['label'][i] == c]
