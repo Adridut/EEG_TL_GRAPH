@@ -31,13 +31,13 @@ if __name__ == "__main__":
         data = dict(np.load('./data/csp/patient'+str(subject)+'.npz'))
         X = data['data']
         adj = np.zeros((X.shape[0],X.shape[1],X.shape[1]))
-        print("Loading adj...")
+        print("Loading adj for patient", subject,"...")
         for i in range(len(X)):
             print('#', sep=' ', end='', flush=True)
             adj[i] = Scompute_mulinfo(X[i],X.shape[1])
 
         np.savez('./data/adj/patient'+str(subject), adj=adj)
         print('\n')
-        print("adj patient ", subject, "saved")
+        print("adj patient", subject, "saved")
 
 

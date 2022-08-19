@@ -16,9 +16,10 @@ def assign_labels(data):
     '''
     Get keys of labels and assign them to the data.
     Input: data with labels as strings
-    Output: data with labels as ints
+    Output: data with labels as ints (actually u32 but will be converted to int later)
     ''' 
     for label in LABELS:
+        print(data['label'])
         data['label'][data['label'][:] == label] = LABELS[label]
 
     return data
@@ -32,6 +33,8 @@ if __name__ == "__main__":
 
         data = assign_labels(data)
 
+        data['label'] = data['label'].astype(int) # convert labels from u32 to int
+        
         np.savez('./data/raw/'+'patient'+str(subject), **data) 
 
         print('Raw data subject '+str(subject)+' done')

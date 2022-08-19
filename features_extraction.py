@@ -4,7 +4,7 @@ import random
 from pathlib import Path
 
 def sort_by_classes(data):
-    data['label'] = sorted(data['label'] , key=lambda x: x[0])
+    data['label'] = sorted(data['label'])
     return data
 
 def cov(data):
