@@ -48,19 +48,23 @@ def apply_mix(W, data):
         
 if __name__ == "__main__":
     Path("./data/csp").mkdir(parents=True, exist_ok=True) 
-    subjectNumber = len([name for name in os.listdir("./data/filtered") if os.path.isfile(os.path.join("./data/aligned", name))])
+    subjectNumber = len([name for name in os.listdir("./data/filtered") if os.path.isfile(os.path.join("./data/filtered", name))])
     for subject in range(1, subjectNumber+1):
         print("##############################################################################")
         print("CSP for patient", subject)
         data = dict(np.load('./data/filtered/patient'+str(subject)+'.npz')) 
         data = sort_by_classes(data)
-        features = []
+        first = True
         for c in set(data['label']):
             print("class", c)
             class_x = [data['data'][i] for i in range(len(data['label'])) if data['label'][i] == c]
             class_rest = [data['data'][i] for i in range(len(data['label'])) if data['label'][i] != c]
             W = csp(class_x, class_rest)
-            features.append(apply_mix(W, np.array(class_rest)))
+            if first:
+                features = apply_mix(W, np.array(class_x))
+                first = False
+            else:
+                features = np.concatenate([features, apply_mix(W, np.array(class_x))])
         
         data['data'] = features
         random.Random(subject).shuffle(data['data'])
