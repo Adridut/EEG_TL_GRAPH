@@ -55,20 +55,7 @@ if __name__ == "__main__":
     train_y = train_y[index]
     train_adj = train_adj[index]
 
-    # model = GATv2Conv(train_x.shape, 4, heads=2)
-    # model.train()
-    # pred = model(torch.from_numpy(train_x).to(torch.float32), edges)
-    # print(pred)
-
-    #x = torch.randn((8, 12, 207, 16))
-    #edge_index = torch.randint(high=206, size=(2, 4608))
-    #x = einops.rearrange(x, 'b l n f -> (b l) n f') 
-
-    # TODO create edge list via adj
-
-    #edge_index = [1,2,3]
-    #edge_index = torch.tensor(edge_index, dtype=torch.long)
     train_x = torch.from_numpy(train_x).to(torch.float32)
-    layer = GATv2Conv(in_channels=1001, out_channels=22)
-    # printresult = torch.stack([layer(train_x[i], edge_index) for i in range(train_x.shape[0])], dim=0)
+    layer = GATv2Conv(in_channels=1001, out_channels=4)
     result = torch.stack([layer(train_x[i], torch.tensor(getEdgeIndex(train_adj[i]), dtype=torch.long)) for i in range(train_x.shape[0])], dim=0)
+    print(result)
