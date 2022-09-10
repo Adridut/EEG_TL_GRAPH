@@ -288,7 +288,7 @@ def getEdgeIndex(adj):
     indexJ = []
     edge_attr = []
     for i in range(adj.shape[0]):
-        for j in range(adj.shape[1]):
+        for j in range(i, adj.shape[1]):
             if adj[i][j] > 0.5:
                 indexI.append(i)
                 indexJ.append(j)
